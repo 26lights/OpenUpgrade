@@ -184,6 +184,20 @@ def create_account_reconcile_model_lines(env):
     openupgrade.logged_query(
         env.cr,
         """
+        ALTER TABLE account_reconcile_model_analytic_tag_rel
+        DROP CONSTRAINT account_reconcile_model_analytic_tag_rel_sh_auto_pk;
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
+        ALTER TABLE account_reconcile_model_analytic_tag_rel
+        ADD PRIMARY KEY(account_reconcile_model_line_id, account_analytic_tag_id)
+        """,
+    )
+    openupgrade.logged_query(
+        env.cr,
+        """
         INSERT INTO account_reconcile_model_analytic_tag_rel (
             account_reconcile_model_line_id, account_analytic_tag_id)
         SELECT arml.id, rel.account_analytic_tag_id

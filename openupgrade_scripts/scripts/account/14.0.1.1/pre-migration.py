@@ -150,13 +150,6 @@ def remove_constrains_reconcile_models(env):
         env.cr,
         """
         ALTER TABLE account_reconcile_model_analytic_tag_rel
-        ALTER COLUMN account_reconcile_model_id DROP NOT NULL
-        """,
-    )
-    openupgrade.logged_query(
-        env.cr,
-        """
-        ALTER TABLE account_reconcile_model_analytic_tag_rel
         ADD COLUMN account_reconcile_model_line_id integer
         """,
     )
